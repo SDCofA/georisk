@@ -62,6 +62,8 @@ The scheduled workflow runs once per day at `06:30` Europe/Istanbul (`03:30` UTC
 
 No account, API key, or model secret is required by the scheduled publication path. Public summaries are deterministic and source-derived.
 
+The country-week refresh rejects `src/tests/fixtures/real_source/` inputs in a production run. The current daily configuration still points to bundled March examples, including ACLED. Until those inputs are replaced with permitted, dated source snapshots and the resulting model is retrained and backtested, the scheduled job fails before it can promote an apparently fresh forecast. A green software build alone is not evidence of a current validated forecast.
+
 The workflow uploads refresh logs from `artifacts/ops/*.log` as run artifacts, but those logs are ignored from version control.
 
 ## Failure Handling

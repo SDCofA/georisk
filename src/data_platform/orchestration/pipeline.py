@@ -64,6 +64,26 @@ def _load_snapshot_dir() -> Path:
     return project_root() / "src" / "tests" / "fixtures" / "real_source"
 
 
+def _reject_production_test_fixtures(config: CountryWeekFeaturesConfig) -> None:
+    """A successful scheduled run must never promote bundled sample data as live evidence."""
+    fixture_root = _load_snapshot_dir().resolve()
+    snapshot_sources = (
+        "acled", "imf", "fao", "wgi", "idea", "noaa", "sipri",
+        "nasa_black_marble", "un_comtrade", "unctad",
+    )
+    bundled_sources = []
+    for name in snapshot_sources:
+        source_path = resolve_path(getattr(config, name).snapshot_file).resolve()
+        if source_path == fixture_root or fixture_root in source_path.parents:
+            bundled_sources.append(name)
+    if bundled_sources:
+        raise ValueError(
+            "Production country-week refresh uses bundled test fixtures for "
+            + ", ".join(bundled_sources)
+            + "; configure licensed or open production sources and revalidate before publication"
+        )
+
+
 def _resolve_storage_root(storage_root: Path, output_root: Path | None) -> Path:
     if output_root is not None:
         return (output_root / storage_root).resolve()
@@ -461,6 +481,8 @@ def run_country_week_features_pipeline(
     use_test_snapshots: bool = False,
 ) -> CountryWeekPipelineRunResult:
     config = load_yaml_config(config_path, CountryWeekFeaturesConfig)
+    if not use_test_snapshots:
+        _reject_production_test_fixtures(config)
     storage_root = _resolve_storage_root(config.storage.storage_root, output_root)
     ingested_at = _ensure_utc_timestamp(pd.Timestamp(datetime.now(timezone.utc)))
 
