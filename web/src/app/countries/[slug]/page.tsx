@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { countryProfiles } from "@/data/countries";
 import { CountryPulseGraphic } from "@/components/country-pulse-graphic";
 import { MethodologyNote } from "@/components/methodology-note";
 import { ReportCard } from "@/components/report-card";
@@ -32,7 +33,8 @@ interface CountryPageProps {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return getOperationalCountries().map((country) => ({ slug: country.slug }));
+  const currentCountries = getOperationalCountries();
+  return (currentCountries.length ? currentCountries : countryProfiles).map((country) => ({ slug: country.slug }));
 }
 
 export async function generateMetadata({ params }: CountryPageProps): Promise<Metadata> {
@@ -56,6 +58,18 @@ export default async function CountryPage({ params }: CountryPageProps) {
   const status = getOperationalStatusSummary();
 
   if (!country) {
+    if (status.freshnessTier === "critical" || status.freshnessTier === "missing") {
+      return (
+        <div className="dashboard-canvas min-h-screen px-8 py-16">
+          <section className="shell-panel mx-auto max-w-5xl p-10">
+            <p className="command-eyebrow">Country forecast · publication withheld</p>
+            <h1 className="mt-5 text-3xl font-semibold text-foreground">No current country forecast is available</h1>
+            <p className="mt-5 text-muted">{status.message ?? "The last snapshot passed its validity window."}</p>
+            <Link href="/forecasts" className="mt-8 inline-block text-sm font-semibold text-foreground">View publication status</Link>
+          </section>
+        </div>
+      );
+    }
     notFound();
   }
 
