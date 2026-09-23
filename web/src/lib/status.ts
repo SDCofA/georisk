@@ -74,6 +74,10 @@ export function buildLiveSnapshotStatus({
     source_path,
     message:
       message ??
-      (source_kind === "fallback" ? "Preferred site snapshot unavailable; using bundled fallback snapshot." : null),
+      (freshness_tier === "critical"
+        ? "The published forecast is beyond its validity window. Country scores are withheld until a new source-backed snapshot is produced."
+        : source_kind === "fallback"
+          ? "Preferred site snapshot unavailable; using bundled fallback snapshot."
+          : null),
   };
 }

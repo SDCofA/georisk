@@ -252,7 +252,7 @@ export function getOperationalStatusSummary(): OperationalStatusSummary {
 }
 
 export function buildOperationalCountriesFromSnapshot(snapshot: ReturnType<typeof getBundle>): OperationalCountry[] {
-  if (!snapshot.bundle) {
+  if (!snapshot.bundle || snapshot.status.freshness_tier === "critical" || snapshot.status.freshness_tier === "missing") {
     return [];
   }
 
@@ -301,6 +301,9 @@ export function getOperationalForecastRows(): OperationalForecastRow[] {
 
 export function getStatusLeadLabel(): string {
   const status = getOperationalStatusSummary();
+  if (status.freshnessTier === "critical" || status.freshnessTier === "missing") {
+    return "No current forecast / Snapshot expired";
+  }
   const label = getPrimaryCountryLabel(status);
   if (!status.leadCountryName) {
     return label === "Lead Country" ? "No published lead country" : "No current watch";

@@ -93,7 +93,7 @@ export function getMonitoringHeroSummary(
 }
 
 export function hasPublishableLeader(status: OperationalStatusSummary): boolean {
-  return status.modelStatus === "promoted" && !status.noClearLeader && status.leadTieCount <= 1;
+  return status.freshnessTier !== "critical" && status.freshnessTier !== "missing" && status.modelStatus === "promoted" && !status.noClearLeader && status.leadTieCount <= 1;
 }
 
 export function getPrimaryCountryLabel(status: OperationalStatusSummary): string {

@@ -26,8 +26,8 @@ export default async function CountriesIndexPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Country monitor"
-            title="Every published country in the current snapshot"
-            description="The country board is no longer constrained to a curated dossier set. Any published forecast country can appear here, route here, and surface as the lead case."
+            title={status.freshnessTier === "critical" || status.freshnessTier === "missing" ? "Country forecasts are withheld" : "Every published country in the current snapshot"}
+            description={status.freshnessTier === "critical" || status.freshnessTier === "missing" ? "The last snapshot passed its validity window. Country probabilities and rankings will return after a new source-backed publication." : "Any published forecast country can appear here, route here, and surface as the lead case."}
           />
         </div>
       </section>

@@ -21,6 +21,22 @@ export default async function ForecastsPage() {
   const rawRows = getOperationalForecastRows();
   const countries = getOperationalCountries();
   const status = getOperationalStatusSummary();
+  if (status.freshnessTier === "critical" || status.freshnessTier === "missing") {
+    return (
+      <div className="dashboard-canvas pb-20">
+        <section className="mx-auto max-w-7xl px-8 py-16">
+          <SectionHeading
+            eyebrow="Forecast board · publication withheld"
+            title="No current country forecast is available"
+            description={status.message ?? "The published snapshot has passed its validity window."}
+          />
+          <p className="mt-8 text-sm text-muted">
+            Last snapshot: {status.publishedAt ?? "unavailable"}. Historical model results are retained for audit, but country rankings and probabilities are withheld until a new source-backed snapshot is published.
+          </p>
+        </section>
+      </div>
+    );
+  }
   const leadCountry = getLeadCountry();
   const reports = await getAllReports();
   const publishableLeader = hasPublishableLeader(status);
