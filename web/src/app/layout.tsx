@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SiteSidebar } from "@/components/site-sidebar";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
+import "./monarch/design.css";
+import { MonarchNavigation } from "./monarch/navigation";
 
-const inter = Inter({
+const inter = localFont({
+  src: "./monarch/fonts/IBMPlexSans-Regular.woff2",
   variable: "--font-inter",
-  subsets: ["latin"],
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const spaceGrotesk = localFont({
+  src: "./monarch/fonts/IBMPlexSans-SemiBold.woff2",
   variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -59,7 +60,8 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} h-full scroll-smooth antialiased`}>
-      <body className="min-h-full bg-background text-foreground">
+      <body className="min-h-full bg-background text-foreground monarch-product" data-monarch-product="georisk">
+        <MonarchNavigation />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
