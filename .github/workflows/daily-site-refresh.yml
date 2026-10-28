@@ -58,6 +58,9 @@ jobs:
           GITHUB_PAGES: "true"
           PAGES_BASE_PATH: ${{ vars.PAGES_BASE_PATH }}
         run: npm run build
+      - name: Verify archived report presentation
+        working-directory: web
+        run: node scripts/verify-report-archive.mjs
       - name: Verify exported site artifact
         run: |
           test -f web/out/index.html

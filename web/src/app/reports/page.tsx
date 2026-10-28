@@ -15,8 +15,8 @@ export default async function ReportsPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="Reports"
-            title="Recent intelligence reporting in the same command shell"
-            description="Reports stay readable and web-first, but the surrounding frame now follows the same operational structure used by the board, country, and status routes."
+            title="Historical research reports"
+            description="These dated reports are archived research. Their claims and historical scores have not been independently verified and do not describe the current forecast."
           />
         </div>
       </section>

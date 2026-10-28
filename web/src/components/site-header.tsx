@@ -1,4 +1,3 @@
-import { AppIcon } from "@/components/app-icon";
 import { SiteNavLinks } from "@/components/site-nav-links";
 import { siteConfig } from "@/lib/site";
 
@@ -12,14 +11,6 @@ export function SiteHeader() {
           <SiteNavLinks variant="header" />
         </nav>
 
-        <div className="flex items-center space-x-4">
-          <button className="rounded-sm p-2 transition-all duration-200 hover:bg-surface-high" aria-label="Notifications">
-            <AppIcon name="notifications" className="h-5 w-5 text-[rgba(218,226,253,0.6)]" />
-          </button>
-          <button className="rounded-sm p-2 transition-all duration-200 hover:bg-surface-high" aria-label="Profile">
-            <AppIcon name="account_circle" className="h-5 w-5 text-[rgba(218,226,253,0.6)]" />
-          </button>
-        </div>
       </div>
     </header>
   );

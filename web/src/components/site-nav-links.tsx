@@ -18,7 +18,7 @@ interface ShellNavItem extends HeaderNavItem {
 const headerItems: HeaderNavItem[] = [
   { href: "/", label: "Dashboard" },
   { href: "/reports", label: "Reports" },
-  { href: "/status", label: "Settings" },
+  { href: "/status", label: "Status" },
 ];
 
 const shellItems: ShellNavItem[] = [

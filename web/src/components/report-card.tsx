@@ -1,7 +1,6 @@
 import { AppIcon } from "@/components/app-icon";
 import Link from "next/link";
 import { formatDate } from "@/lib/formatters";
-import { getReportConflictLabel } from "@/lib/monitoring-presentation";
 import type { ReportFrontmatter } from "@/lib/types";
 
 interface ReportCardProps {
@@ -21,7 +20,6 @@ function visualTone(report: ReportFrontmatter) {
 
 export function ReportCard({ report }: ReportCardProps) {
   const tone = visualTone(report);
-  const conflictLabel = getReportConflictLabel(report);
 
   return (
     <article className="report-card-shell group overflow-hidden">
@@ -36,15 +34,12 @@ export function ReportCard({ report }: ReportCardProps) {
           {report.title}
         </h3>
         <div className="mt-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[rgba(218,226,253,0.5)]">
-          Predicted conflict
-        </div>
-        <div className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-[rgba(218,226,253,0.82)]">
-          {conflictLabel}
+          Archived research
         </div>
         <p className="mt-3 text-sm leading-6 text-[rgba(218,226,253,0.72)]">{report.summary}</p>
         <div className="mt-4 flex items-center justify-between border-t border-[rgba(69,70,77,0.16)] pt-3">
           <span className="text-[10px] text-[rgba(218,226,253,0.6)]">{formatDate(report.date)}</span>
-          <Link href={`/reports/${report.slug}`} className="text-[rgba(218,226,253,0.68)]">
+          <Link href={`/reports/${report.slug}`} aria-label={`Read archived report: ${report.title}`} className="text-[rgba(218,226,253,0.68)]">
             <AppIcon name="arrow_forward" className="h-4 w-4" />
           </Link>
         </div>

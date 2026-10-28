@@ -12,7 +12,7 @@ export function SiteSidebar() {
           </div>
           <div>
             <div className="font-headline text-sm font-bold uppercase tracking-tight text-foreground">Command Center</div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.24em] text-[rgba(218,226,253,0.55)]">Level 4 Clearance</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.24em] text-[rgba(218,226,253,0.55)]">Public research</div>
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@ export function SiteSidebar() {
         href="/reports"
         className="mt-auto inline-flex w-full items-center justify-center bg-gradient-to-r from-primary to-primary-strong px-4 py-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#2a1700] transition-all hover:shadow-[0_0_20px_rgba(244,47,84,0.3)]"
       >
-        Generate Report
+        View reports
       </Link>
     </aside>
   );

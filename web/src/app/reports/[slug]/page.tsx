@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MethodologyNote } from "@/components/methodology-note";
 import { ReportToc } from "@/components/report-toc";
@@ -66,10 +67,9 @@ export default async function ReportPage({ params }: ReportPageProps) {
       <div className="grid gap-8 lg:grid-cols-[0.74fr_0.26fr]">
         <article className="space-y-8">
           <header className="terminal-panel space-y-5 rounded-lg p-7">
+            <p role="note" className="text-sm leading-6 text-muted">Archived research: this report reflects its publication date. Its claims and historical scores have not been independently verified and are not a current forecast.</p>
             <div className="flex flex-wrap items-center gap-3 text-[0.68rem] uppercase tracking-[0.24em] text-muted">
               <span>{frontmatter.region}</span>
-              <span>{frontmatter.heroMetric}</span>
-              <span>{frontmatter.horizon}</span>
             </div>
             <h1 className="max-w-4xl text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">
               {frontmatter.title}
@@ -79,7 +79,6 @@ export default async function ReportPage({ params }: ReportPageProps) {
               <p>Published {formatDate(frontmatter.date)}</p>
               <p>Updated {formatDateTime(frontmatter.updatedAt)}</p>
               <p>Authors: {frontmatter.authors.join(", ")}</p>
-              <p>Forecast version: {frontmatter.forecastVersion}</p>
             </div>
           </header>
 
@@ -97,10 +96,10 @@ export default async function ReportPage({ params }: ReportPageProps) {
               <p className="terminal-label text-accent">Related reports</p>
               <div className="grid gap-4 md:grid-cols-2">
                 {relatedReports.slice(0, 2).map((candidate) => (
-                  <a key={candidate.slug} href={`/reports/${candidate.slug}`} className="terminal-panel rounded-lg p-5 hover:border-accent/20">
+                  <Link key={candidate.slug} href={`/reports/${candidate.slug}`} className="terminal-panel rounded-lg p-5 hover:border-accent/20">
                     <h2 className="text-xl font-semibold tracking-[-0.03em] text-foreground">{candidate.title}</h2>
                     <p className="mt-3 text-sm leading-7 text-muted">{candidate.summary}</p>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </section>
